@@ -27,4 +27,7 @@ module.exports = {
         audience: process.env.JWT_AUDIENCE,
         issuer: process.env.JWT_ISSUER,
     },
+
+    timezone: process.env.TIMEZONE,
+    node_env: process.env.NODE_ENV
 };
