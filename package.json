@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "init-db": "./db/start_db.sh",
+    "start": "./db/start_db.sh && pm2 start dht-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
