@@ -1,10 +1,9 @@
 module.exports = {
 
     database: {
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_NAME,
+        uri: process.env.MONGODB_URI,
+        name: process.env.MONGODB_DB_NAME,
+        table_name: process.env.MONGODB_TABLE_NAME
     },
 
     server: {
