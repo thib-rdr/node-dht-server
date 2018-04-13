@@ -13,6 +13,7 @@ module.exports = (body) =>
         json: true
     })
     .then((result) => {
+        logger.debug(`Record send successfully`);
         return result;
     })
     .catch((err) => { 

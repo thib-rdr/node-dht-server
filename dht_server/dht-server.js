@@ -10,6 +10,9 @@ const bodyParser = require('body-parser');
 const basicAuth = require('express-basic-auth');
 const db = require('./db/db');
 const Joi = require('joi');
+const RateLimit = require('express-rate-limit');
+
+app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
 
 const schema = Joi.object().keys({
     temp: Joi.number().required(),
@@ -24,6 +27,13 @@ app.use(basicAuth({
         [config.auth.httpUser]: config.auth.httpPassword
     }
 }))
+var limiter = new RateLimit({
+    windowMs: 60 * 1000,
+    max: 100,
+    delayMs: 0
+});
+app.use(limiter);
+
 db.open()
     .then(() => {
         app.post('/records', function(req, res, next) {
@@ -34,10 +44,14 @@ db.open()
                 res.status(422).json(result.error.details);
             else
                 db.insert(config.database.table_name, result.value)
-                    .then(() => {
-                        res.setHeader('Content-Type', 'application/json');
-                        res.status(200);
-                    });
+                .then(() => {
+                    logger.debug(`Record saved successfully`);
+                    res.setHeader('Content-Type', 'application/json');
+                    res.status(201).json({});
+                })
+                .catch(error => {
+                    res.status(500, { error });
+                })
         });
 
         app.get('/records', function(req, res, next) {
