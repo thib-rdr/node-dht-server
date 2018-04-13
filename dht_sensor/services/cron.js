@@ -13,10 +13,13 @@ module.exports = () => {
         const job = new cron({
             cronTime: task.cronTime,
             onTick: func,
-            start: false,
+            start: config.node_env === 'test',
             timeZone: config.timezone
         });
+        
         logger.info('Loaded job ' + task.service);
+        if(config.node_env === 'test')
+            require(__base + task.service)()
         job.start();
    })
 }

@@ -7,7 +7,7 @@ let db = null;
 const open = () =>
     mongoClient.connect(config.database.uri)
     .then(client => {
-        db = client.db(config.database.name);;
+        db = client.db(config.database.name);
         logger.info('Connection to database initialized')
         return db;
     })
@@ -28,5 +28,5 @@ module.exports = {
     open,
     close,
     insert,
-    read
-};
+    read,
+}
