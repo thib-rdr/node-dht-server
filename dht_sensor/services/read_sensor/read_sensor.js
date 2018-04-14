@@ -15,7 +15,7 @@ module.exports = () => {
             }
             const object = JSON.parse(stdout);
             object.date = new Date();
-            logger.info(object);
+            logger.info(JSON.stringify(object));
             return sendRecord(object)
         });
     }    
