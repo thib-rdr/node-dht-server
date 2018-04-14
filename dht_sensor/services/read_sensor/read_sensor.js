@@ -16,7 +16,7 @@ module.exports = () => {
             const object = JSON.parse(stdout);
             object.date = new Date();
             logger.info(object);
-            return sendRecord({temp: 21.5, humidity: 55.5, date: new Date().getTime()})
+            return sendRecord(object)
         });
     }    
 }
