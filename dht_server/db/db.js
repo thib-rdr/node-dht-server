@@ -18,15 +18,18 @@ const close = (db) => {
 }
 
 const insert = (table, object) => db.collection(table).insert(object);
-const read = (table, query = {}) => 
+const read = (table, query = {}) =>
     db.collection(table)
-        .find(query)
-        .sort({date: -1})
-        .toArray();
+    .find(query)
+    .sort({ date: -1 })
+    .toArray();
+
+const clean = (table) => db.collection(table).deleteMany({})
 
 module.exports = {
     open,
     close,
     insert,
     read,
+    clean,
 }
